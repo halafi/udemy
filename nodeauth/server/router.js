@@ -7,7 +7,7 @@ const requireSignin = passport.authenticate('local', { session: false });
 
 module.exports = function(app) {
     app.get('/', requireAuth, (req, res) => { // protected resource, verify token and give access
-        res.send({ hi: 'there'});
+        res.send({ message: 'authenticated request ok'});
     });
     app.post('/signin', requireSignin, Authentication.signin); // verify emal/password and give token
     app.post('/signup', Authentication.signup); // verify email is not in use and give token
