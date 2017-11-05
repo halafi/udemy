@@ -51,6 +51,7 @@ const addLyricMutation = gql`
       lyrics {
         id
         content
+        likes
       }
     }
   }
