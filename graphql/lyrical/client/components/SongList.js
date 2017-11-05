@@ -17,10 +17,9 @@ class SongList extends PureComponent {
 
   renderSongs() {
     return this.props.data.songs.map(song => {
-      console.log(song);
       return (
         <li className="collection-item" key={song.id}>
-          {song.title}{" "}
+          <Link to={`/songs/${song.id}`}>{song.title}</Link>{" "}
           <i className="material-icons" onClick={() => this.onSongDelete(song.id)}>
             delete
           </i>
@@ -31,7 +30,7 @@ class SongList extends PureComponent {
 
   render() {
     if (this.props.data.loading) {
-      return <div>Loading...</div>;
+      return null
     }
     return (
       <div>
