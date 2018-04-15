@@ -1,7 +1,7 @@
 self.addEventListener("install", function(event) {
   console.log("[Service Worker] Installing Service Worker ...", event);
   event.waitUntil(
-    caches.open("static").then(function(cache) {
+    caches.open("static").then(function(cache) { // use static-v2 if code is changed but service worker isnt
       console.log("[Service Worker] Precaching App Shell");
       // pre-caching (static)
       cache.addAll([
@@ -36,7 +36,16 @@ self.addEventListener("fetch", function(event) {
       if (response) {
         return response;
       }
-      return fetch(event.request);
+      return fetch(event.request)
+        .then(function(res) {
+          return caches.open("dynamic").then(function(cache) {
+            cache.put(event.request.url, res.clone());
+            return res;
+          });
+        })
+        .catch(function(err) {
+
+        });
     })
   );
 });
